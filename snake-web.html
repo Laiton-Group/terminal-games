@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>snake · terminal games</title>
+<style>
+body{margin:0;background:#0a0a0f;display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;font-family:monospace;overflow:hidden}
+canvas{border:1px solid #1a3a2a;border-radius:4px;background:#0d0d14;box-shadow:0 0 40px rgba(0,212,170,.05)}
+#hud{color:#666;font-size:12px;margin-top:12px;letter-spacing:2px}
+#hud span{color:#00d4aa}
+#hud .over{color:#ff4444;display:none}
+</style>
+</head>
+<body>
+<canvas id="c" width="400" height="400"></canvas>
+<div id="hud"><span id="score">0</span> · <span id="high">0</span> record · <span class="over" id="go">game over</span></div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d'),S=20,N=20
+let snake=[[10,10]],food=[15,15],dir=[1,0],next=[1,0],score=0,high=0,running=true,gameover=false
+function rand(){return[Math.floor(Math.random()*N),Math.floor(Math.random()*N)]}
+function reset(){snake=[[10,10]];food=rand();dir=[1,0];next=[1,0];score=0;running=true;gameover=false;document.getElementById('go').style.display='none'}
+document.onkeydown=e=>{
+  if(gameover&&e.key=='Enter'){reset();return}
+  if(!running)return
+  switch(e.key){
+    case'ArrowUp':if(dir[1]!=1)next=[0,-1];break
+    case'ArrowDown':if(dir[1]!=-1)next=[0,1];break
+    case'ArrowLeft':if(dir[0]!=1)next=[-1,0];break
+    case'ArrowRight':if(dir[0]!=-1)next=[1,0];break
+  }
+}
+function game(){
+  if(!running){requestAnimationFrame(game);return}
+  dir=next
+  const head=[snake[0][0]+dir[0],snake[0][1]+dir[1]]
+  if(head[0]<0||head[0]>=N||head[1]<0||head[1]>=N||snake.some(s=>s[0]==head[0]&&s[1]==head[1])){
+    gameover=true;running=false;document.getElementById('go').style.display='inline'
+    if(score>high){high=score;document.getElementById('high').textContent=high}
+    requestAnimationFrame(game);return
+  }
+  snake.unshift(head)
+  if(head[0]==food[0]&&head[1]==food[1]){score++;document.getElementById('score').textContent=score;food=rand();while(snake.some(s=>s[0]==food[0]&&s[1]==food[1]))food=rand()}
+  else snake.pop()
+  ctx.clearRect(0,0,400,400)
+  ctx.fillStyle='#00d4aa';ctx.shadowColor='rgba(0,212,170,.3)';ctx.shadowBlur=10
+  snake.forEach((s,i)=>{ctx.fillRect(s[0]*S,s[1]*S,S-1,S-1);if(i==0){ctx.shadowBlur=20;ctx.fillRect(s[0]*S,s[1]*S,S-1,S-1);ctx.shadowBlur=10}})
+  ctx.shadowBlur=0;ctx.fillStyle='#555'
+  ctx.beginPath();ctx.arc(food[0]*S+S/2,food[1]*S+S/2,4,0,Math.PI*2);ctx.fill()
+  setTimeout(()=>requestAnimationFrame(game),gameover?200:120)
+}
+game()
+</script>
+</body>
+</html>

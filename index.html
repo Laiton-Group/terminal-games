@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>terminal games</title>
+<style>
+body{background:#0a0a0f;color:#e0e0e0;font-family:monospace;max-width:600px;margin:60px auto;padding:20px}
+h1{color:#00d4aa;font-size:28px;font-weight:400;text-transform:uppercase;letter-spacing:6px;margin-bottom:40px}
+h1::before{content:'> ';opacity:.5}
+.game{border:1px solid #1a3a2a;border-radius:8px;padding:20px;margin:16px 0;transition:.2s}
+.game:hover{border-color:#00d4aa;box-shadow:0 0 20px rgba(0,212,170,.08)}
+.game h2{font-size:16px;color:#00d4aa;font-weight:400;margin:0 0 6px;text-transform:uppercase;letter-spacing:2px}
+.game p{color:#666;font-size:13px;margin:0;line-height:1.6}
+.game .play{display:inline-block;margin-top:10px;color:#888;text-decoration:none;font-size:12px;border:1px solid #1a3a2a;padding:6px 16px;border-radius:4px;transition:.2s}
+.game .play:hover{color:#00d4aa;border-color:#00d4aa}
+.footer{margin-top:50px;font-size:11px;color:#333;letter-spacing:2px;text-align:center}
+.footer a{color:#555;text-decoration:none}
+.footer a:hover{color:#00d4aa}
+</style>
+</head>
+<body>
+<h1>terminal games</h1>
+<div class="game">
+  <h2>snake</h2>
+  <p>Jeu du serpent rétro dans le terminal. Python + curses.</p>
+  <a class="play" href="https://github.com/Laiton-Group/terminal-games/blob/main/snake.py">Voir le code</a>
+  <a class="play" href="snake-web.html">Jouer en ligne</a>
+</div>
+<div class="game">
+  <h2>asteroids</h2>
+  <p>Tir spatial dans le navigateur. ← → bouger, ↑ tirer.</p>
+  <a class="play" href="https://laiton.neocities.org/game.html">Jouer</a>
+</div>
+<div class="footer">
+<a href="https://github.com/Laiton-Group/terminal-games">github</a> · <a href="https://laiton.neocities.org">laiton</a>
+</div>
+</body>
+</html>
